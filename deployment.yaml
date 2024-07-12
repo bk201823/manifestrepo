@@ -1,0 +1,37 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: mypythonflaskdemo
+  name: mypythonflaskdemo
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: mypythonflaskdemo
+  strategy: {}
+  template:
+    metadata:
+      labels:
+        app: mypythonflaskdemo
+    spec:
+      containers:
+      - image: balaji2018/testrepo12:mypython-project
+        name: flaskdemo
+        resources: {}
+status: {}
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: release-name-my-python-flask-prj
+spec:
+  type: NodePort
+  ports:
+  - port: 9001
+    targetPort: http
+    protocol: TCP
+    name: http
+  selector:
+    app: mypythonflaskdemo
